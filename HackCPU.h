@@ -8,6 +8,9 @@
 extern "C" {
 #endif
 
+extern int16_t a, d; // CPU-resident registers
+extern int16_t pc; // program counter
+
 struct Outputs
 {
   int16_t outM;

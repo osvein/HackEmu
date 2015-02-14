@@ -22,8 +22,7 @@
 #define MASK_J2 0x2 // out = 0
 #define MASK_J3 0x1 // out > 0
 
-int16_t a, d; // CPU-resident registers
-int16_t pc; // program counter
+int16_t a, d, pc;
 
 extern Outputs emulate(int16_t inM, int16_t instruction, bool reset)
 {
