@@ -20,7 +20,7 @@ struct Outputs
   bool writeM;       // Write to M?
   uint16_t addressM; // Address of M in data memory
   uint16_t pc;       // Address of next instruction
-}
+};
 
 /*
  * Emulates the next CPU clock cycle
@@ -29,7 +29,7 @@ struct Outputs
  * reset       - Signals whether to restart the current program (reset=true) or continue executing the current program (reset=false)
  * returns CPU outputs
  */
-extern Outputs emulate(int16_t inM, int16_t instruction, bool reset);
+extern struct Outputs emulate(int16_t inM, int16_t instruction, bool reset);
 
 #ifdef __cplusplus
 }

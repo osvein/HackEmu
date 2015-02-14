@@ -1,4 +1,4 @@
-#include HackCPU.h
+#include "HackCPU.h"
 
 #define MASK_INSTRUCTION 0x8000 // instruction code: 1 for C, 0 for A
 
@@ -25,17 +25,17 @@
 
 int16_t a, d, pc;
 
-extern Outputs emulate(int16_t inM, int16_t instruction, bool reset)
+extern struct Outputs emulate(int16_t inM, int16_t instruction, bool reset)
 {
   pc++; // increment the program counter
 
-  Outputs ret = {};
-  ret->addressM = a; // set the addressM output to the value stored in the A register
+  struct Outputs ret = {};
+  ret.addressM = a; // set the addressM output to the value stored in the A register
 
   // if A instruction (if the first bit is clear)
   if (!(instruction & MASK_INSTRUCTION))
   {
-    emu->a = instruction // write instruction to the A register
+    a = instruction; // write instruction to the A register
   }
   // if C instruction (if the first bit is set)
   else
@@ -49,13 +49,13 @@ extern Outputs emulate(int16_t inM, int16_t instruction, bool reset)
 
     int16_t out = (instruction & MASK_C5) ? x + y : x & y; // the output is either x + y (c5-bit=set) or x & y (c5-bit=clear)
     if (instruction & MASK_C6) out = ~out; // negate the out output if the c6-bit is set
-    ret->outM = out;
+    ret.outM = out;
 
     if (instruction & MASK_D1) a = out;            // store the computed value in the A register if the d1-bit is set
     if (instruction & MASK_D2) d = out;            // store the computed value in the D register if the d2-bit is set
-    if (instruction & MASK_D3) ret->writeM = true; // store the computed value in the M register if the d3-bit is set
+    if (instruction & MASK_D3) ret.writeM = true; // store the computed value in the M register if the d3-bit is set
 
-    bool jump;
+    bool jump = false;
     jump = jump || ((instruction & MASK_J1) && (out < 0)); // If out > 0 set jump to true if the j1-bit is set
     jump = jump || ((instruction & MASK_J2) && (out = 0)); // If out = 0 set jump to true if the j2-bit is set
     jump = jump || ((instruction & MASK_J3) && (out > 0)); // If out < 0 set jump to true if the j3-bit is set
@@ -63,7 +63,7 @@ extern Outputs emulate(int16_t inM, int16_t instruction, bool reset)
   }
 
   if (reset) pc = 0; // reset the program counter to 0 if reset is true
-  ret->pc = pc; // set the pc output to the value stored in the program counter
+  ret.pc = pc; // set the pc output to the value stored in the program counter
 
   return ret;
 }
