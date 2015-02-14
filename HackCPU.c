@@ -27,8 +27,9 @@ int16_t a, d, pc;
 
 extern Outputs emulate(int16_t inM, int16_t instruction, bool reset)
 {
+  pc++;
+
   Outputs ret = {};
-  ret->pc = ++pc;
   ret->addressM = a;
 
   // if A instruction (if the first bit is clear)
@@ -59,9 +60,10 @@ extern Outputs emulate(int16_t inM, int16_t instruction, bool reset)
     jump = jump || ((instruction & MASK_J2) && (out = 0)); // If out = 0 set jump to true if the j2-bit is set
     jump = jump || ((instruction & MASK_J3) && (out > 0)); // If out < 0 set jump to true if the j3-bit is set
     if (jump) pc = a; // set the program counter to the value stored in the A register if jump is true
-
-    if (reset) pc = 0; // set the program counter to 0 if reset is true
   }
+
+  if (reset) pc = 0; // set the program counter to 0 if reset is true
+  ret->pc = pc;
 
   return ret;
 }
