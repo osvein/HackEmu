@@ -27,10 +27,10 @@ int16_t a, d, pc;
 
 extern Outputs emulate(int16_t inM, int16_t instruction, bool reset)
 {
-  pc++;
+  pc++; // increment program counter
 
   Outputs ret = {};
-  ret->addressM = a;
+  ret->addressM = a; // set the addressM output to the value stored in the A register
 
   // if A instruction (if the first bit is clear)
   if (!(instruction & MASK_INSTRUCTION))
@@ -63,7 +63,7 @@ extern Outputs emulate(int16_t inM, int16_t instruction, bool reset)
   }
 
   if (reset) pc = 0; // set the program counter to 0 if reset is true
-  ret->pc = pc;
+  ret->pc = pc; // set the pc output to the value stored in the program counter
 
   return ret;
 }
