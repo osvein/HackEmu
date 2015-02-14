@@ -9,17 +9,27 @@ extern "C" {
 #endif
 
 extern int16_t a, d; // CPU-resident registers
-extern int16_t pc; // program counter
+extern int16_t pc;   // Program counter
 
+/*
+ * CPU outputs.
+ */
 struct Outputs
 {
-  int16_t outM;
-  bool writeM;
-  uint16_t addressM;
-  uint16_t pc;
+  int16_t outM;      // M value output
+  bool writeM;       // Write to M?
+  uint16_t addressM; // Address of M in data memory
+  uint16_t pc;       // Address of next instruction
 }
 
-extern Outputs emulate(int16_t inM, int16_t instruction, bool reset); // emulate 1 clock cycle
+/*
+ * Emulates the next CPU clock cycle
+ * inM         - M value input
+ * instruction - Instruction for execution
+ * reset       - Signals whether to restart the current program (reset=true) or continue executing the current program (reset=false)
+ * returns CPU outputs
+ */
+extern Outputs emulate(int16_t inM, int16_t instruction, bool reset);
 
 #ifdef __cplusplus
 }
