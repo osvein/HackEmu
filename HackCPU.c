@@ -29,7 +29,7 @@ extern struct Outputs emulate(int16_t inM, int16_t instruction, bool reset)
 {
   pc++; // increment the program counter
 
-  struct Outputs ret = {};
+  struct Outputs ret = {0};
   ret.addressM = a; // set the addressM output to the value stored in the A register
 
   // if A instruction (if the first bit is clear)
