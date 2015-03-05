@@ -1,6 +1,6 @@
 #include "HackCPU.h"
 
-#define MASK_INSTRUCTION 0x8000 // instruction code: 1 for C, 0 for A
+#define MASK_I 0x8000 // instruction code: 1 for C, 0 for A
 
 #define MASK_A 0x1000 // y input code: 1 for M, 0 for A
 
