@@ -1,3 +1,3 @@
 # HackEmu
 
-A compact, embeddable Hack architecture emulator — Edit
+A compact, embeddable Hack architecture emulator
